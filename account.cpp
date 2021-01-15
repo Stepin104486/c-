@@ -1,35 +1,21 @@
 #include "account.h"
-Account::Account():
-    m_accNumber(""),m_accName(""), m_balance(0.0)
-{
+#include <gtest/gtest.h>
+namespace {
+TEST(Account, Empty_Cosnstructor) {
+    Account A1;
+  EXPECT_EQ(0.0, A1.getBalance());
 }
-Account::Account(std::string num ,std::string name,double bal):
-    m_accNumber(num),m_accName(name), m_balance(bal)
-{
+
+TEST(Account, Parameter) {
+    Account A1("500", "usha", 600);
+  EXPECT_EQ(600, A1.getBalance());
 }
-Account::Account(std::string num,std::string name):
-    m_accNumber(num),m_accName(name), m_balance(0)
-{
+
+TEST(Account, Transaction) {
+    Account A2("500", "usha", 600);
+    A2.debit(300);
+    A2.credit(52.5);
+    EXPECT_EQ(352.5, A2.getBalance());
 }
-Account::Account(const Account& ref):
-    m_accNumber(ref.m_accNumber),m_accName(ref.m_accNumber), m_balance(ref.m_balance)
-{
 }
-void Account::debit(double amount)
-{
-    m_balance -= amount;
-}
-void Account::credit(double amount)
-{
-    m_balance += amount;
-}
-double Account::getBalance() const
-{
-    return m_balance;
-}
-void Account::dispay() const
-{
-    std::cout << "Acc Num: " << m_accNumber
-            << "Acc Name: "  << m_accName
-            << "Acc Balance:" << m_balance;
-}
+
